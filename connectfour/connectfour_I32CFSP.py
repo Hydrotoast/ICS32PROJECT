@@ -1,5 +1,11 @@
 import socket
 
+    
+def user_drop(column: str, socket_out: file)-> None:
+    '''combines user column with DROP and send it to socket'''
+    message = 'DROP '+column+'\r\n'
+    socket_out.write(message)
+    socket_out.flush()
 
 def connect_socket(user_host: str, user_port: int, user_id: str) -> socket:
     s = socket.socket()
@@ -11,15 +17,11 @@ def connect_socket(user_host: str, user_port: int, user_id: str) -> socket:
         socket_out = s.makefile('w')
         socket_out.write('I32CFSP_HELLO '+user_id+'\r\n')
         socket_out.flush()
-        print('message sent')
         reply = socket_in.readline()
-        print(reply)
         socket_out.write('AI_GAME\r\n')
         socket_out.flush()  
-        print('message sent')
         reply = socket_in.readline()
         print(reply)
-        
     except:
         print('Connection Failed. Closing the socket.')
     finally:

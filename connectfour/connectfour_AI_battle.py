@@ -2,6 +2,7 @@ import socket
 import connectfour
 import connectfour_function
 
+
 def conduct_connectfour_battle(user_host: str, user_port: int, user_id: str) -> None:
     s = socket.socket()
     the_winner = connectfour.NONE
@@ -31,4 +32,5 @@ if __name__ == '__main__':
     user_host = input('Please specify IP address or a host')
     user_port = int(input('Please enter port'))
     user_id = input('Please enter your user id').strip()
-    conduct_connectfour_battle(user_host, user_port)
+    connectfour_I32CFSP.connect_socket(user_host, user_port, user_id)
+    
