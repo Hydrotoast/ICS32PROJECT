@@ -4,11 +4,11 @@ import connectfour_function
 
 
 def conduct_connectfour_battle(user_host: str, user_port: int, user_id: str) -> None:
-    s = socket.socket()
     the_winner = connectfour.NONE
     the_user = connectfour.RED
     try:
-        s.connect((user_host, user_port))
+        s = connect_socket(user_host, user_port, user_id)
+        setup_game(s)
         print('Connected! Let the Battle Begin!!!!!')
         game_state = connectfour.new_game_state()
         connectfour_consol.display_board(game_state.board)
@@ -32,5 +32,5 @@ if __name__ == '__main__':
     user_host = input('Please specify IP address or a host')
     user_port = int(input('Please enter port'))
     user_id = input('Please enter your user id').strip()
-    connectfour_I32CFSP.connect_socket(user_host, user_port, user_id)
+    conduct_connectfour_battle(user_host, user_port, user_id)
     
