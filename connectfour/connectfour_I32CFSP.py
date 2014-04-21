@@ -4,21 +4,28 @@ import socket
 def connect_socket(user_host: str, user_port: int, user_id: str) -> socket:
     s = socket.socket()
     try:
+        print('connecting')
         s.connect((user_host, user_port))
+        print('connected')
         socket_in = s.makefile('r')
         socket_out = s.makefile('w')
         socket_out.write('I32CFSP_HELLO '+user_id+'\r\n')
         socket_out.flush()
+        print('message sent')
         reply = socket_in.readline()
         print(reply)
         socket_out.write('AI_GAME\r\n')
-        socket_out.flush()
+        socket_out.flush()  
+        print('message sent')
         reply = socket_in.readline()
         print(reply)
+        
     except:
         print('Connection Failed. Closing the socket.')
     finally:
+        print('closing')
         s.close()
+        print('Good Bye!')        
     
 #OfficeHour question: what functions do I need for this module?
 
