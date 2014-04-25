@@ -1,4 +1,4 @@
-# connectfour.py
+### connectfour.py
 #
 # ICS 32 Spring 2014
 # Project #2: Send Me On My Way

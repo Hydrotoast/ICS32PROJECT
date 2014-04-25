@@ -19,12 +19,15 @@ def check_to_continue(reply: str, s):
         print('This is an invalid move. Please enter different column number')
         column = input('Please enter the column number.')
         new_reply = user_drop(column, s)
-        AI_move = check_to_continue(new_reply)
+        check_to_continue(new_reply)
+##        AI_move = check_to_continue(new_reply)
     else:
         socket_in = s.makefile('r')
-        AI_move = socket_in.readline()[-3]
         socket_in.readline()
-    return AI_move
+        AI_Move = socket_in.readline()
+##        AI_move = socket_in.readline()[-1]
+##        socket_in.readline()
+##    return AI_move
 
 def connect_socket(user_host: str, user_port: int, user_id: str) -> socket:
     s = socket.socket()
@@ -54,9 +57,9 @@ def setup_game(s: socket) -> None:
 #OfficeHour question: what functions do I need for this module?
 
 if __name__ == '__main__':
-    user_host = input('Please specify IP address or a host')
-    user_port = int(input('Please enter port'))
-    user_id = input('Please enter your user id').strip()
+    user_host = 'woodhouse.ics.uci.edu' #input('Please specify IP address or a host')
+    user_port = 4444 #int(input('Please enter port'))
+    user_id = 'Burbri' #input('Please enter your user id').strip()
     connect_socket(user_host, user_port, user_id)
     s = connect_socket(user_host, user_port, user_id)
     setup_game(s)
