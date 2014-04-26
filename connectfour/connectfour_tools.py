@@ -27,14 +27,14 @@ def display_board(board: [[str]])-> None:
 
 def pop_or_drop(game_state: connectfour.ConnectFourGameState, column_number: int) -> connectfour.ConnectFourGameState:
     '''give player an option whether to pop for drop a piece and execute the command'''
-    action = input('Do you want to pop or drop? Pop for {}, drop for {}.'.format(POP,DROP)).lower().strip()
+    action = ask_action() 
     if action == POP:
-        move = int(_ask_move(column_number))-1
+        move = int(ask_move(column_number))-1
         print(move)
         new_game_state = connectfour.pop_piece(game_state, move)
         return new_game_state
     elif action == DROP:
-        move = int(_ask_move(column_number))-1
+        move = int(ask_move(column_number))-1
         new_game_state = connectfour.drop_piece(game_state, move)
         return new_game_state
     else:
@@ -49,9 +49,12 @@ def print_the_winning_player(the_winner: str, player_one: str, player_two: str) 
     else:
         print('{} player, you won!'.format(player_two))
 
+def ask_action()-> str:
+    action = input('Do you want to pop or drop? Pop for {}, drop for {}.'.format(POP,DROP)).lower().strip()
+    return action
+    
 
-#####Private functions######
-def _ask_move(column_number: int) -> int:
+def ask_move(column_number: int) -> int:
     '''ask user for column that they want to drop or pop their piece if given situation True. If the situation is False, give an error message.'''
     move = input('Please type in 1~{}'.format(column_number))
     return move

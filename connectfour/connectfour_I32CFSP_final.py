@@ -11,8 +11,8 @@ import connectfour_tools
 
 
 ConnectFourConnection = collections.namedtuple('ConnectFourConnection', ['socket','socket_input','socket_output'])
-ConnectFourMessage = collections.namedtuple('ConnectfourMessage', ['username','text'])
-
+AI_Message = collections.namedtuple('AI_Message',['action','move'])
+ai_message = AI_Message(action = '', move = '')
 
 def connect(host: str, port: int) -> ConnectFourConnection:
     '''
@@ -39,11 +39,29 @@ def login(connection: ConnectFourConnection, username: str) -> bool:
     return _expect_line(connection, 'WELCOME '+ username)
 
 
-def declare_match(connection: ConnectFourConnetion) -> bool:
+def declare_match(connection: ConnectFourConnection) -> bool:
+    '''
+    After logging in let user to declare battle with AI. If attempt fails, returns False.
+    '''
     _write_line(connection, 'AI_GAME')
     return _expect_line(connection, 'READY')
 
 
+def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnection)-> bool:
+    if action == connectfour_tools.DROP:
+        _write_line(connection, 'DROP '+move)
+        return _expect_line(connection, 'OKAY')
+    elif action == connectfour_tools.POP:
+        _write_line(connection, 'POP '+move)
+        return _expect_line(connection, 'OKAY')
+    
+
+def classify_ai_move(connection: ConnectFourConnection)-> AI_Message:
+    '''returns the action and the move of AI in named tupble form'''
+    move_list = _read_line(connection).split(' ')
+    _read_line(connection)
+    return AI_Message(action = move_list[0], move = int(move_list[1]))
+    
     
 ### These are Private function
 def _read_line(connection: ConnectFourConnection) -> str:
