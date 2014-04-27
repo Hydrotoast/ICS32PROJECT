@@ -17,7 +17,6 @@ def _main():
     player_one = connectfour.RED
     player_two = connectfour.YELLOW
     column_number = connectfour.BOARD_COLUMNS
-    row_number = connectfour.BOARD_ROWS
     game_state = connectfour_tools.init_the_game()
 
     while the_winner == connectfour.NONE:
