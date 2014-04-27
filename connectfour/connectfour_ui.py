@@ -7,9 +7,9 @@ import connectfour_tools
 def _conduct_connectfour_battle():
     _welcome_banner()
     
-    user_host = 'woodhouse.ics.uci.edu' #input('Please specify your IP address or a host.')
-    user_port = 4444 #int(input('Please enter the port.'))
-    user_id = 'Burbri' #input('Please enter your user id.').strip()
+    user_host = input('Please specify your IP address or a host.').strip()
+    user_port = int(input('Please enter the port.'))
+    user_id = input('Please enter your user id.').strip()
     the_winner = connectfour.NONE
     user_player = connectfour.RED
     ai_player = connectfour.YELLOW
@@ -26,7 +26,7 @@ def _conduct_connectfour_battle():
         if connectfour_I32CFSP_final.declare_match(connect_four_connection):
             print('Initializing the game.')
         else:
-            print('We could not request the game. sorry!')
+            print('Battle request Failed.')
             
         game_state = connectfour_tools.init_the_game()
     

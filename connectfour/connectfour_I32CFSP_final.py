@@ -53,8 +53,8 @@ def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnectio
         _write_line(connection, 'DROP '+str(move))
         return _expect_line(connection, 'OKAY')
     elif action == connectfour_tools.POP:
-        _write_line(connection, 'POP '+str(move))
         move += 1
+        _write_line(connection, 'POP '+str(move))
         return _expect_line(connection, 'OKAY')
     
 
