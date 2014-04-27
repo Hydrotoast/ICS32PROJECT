@@ -49,10 +49,12 @@ def declare_match(connection: ConnectFourConnection) -> bool:
 
 def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnection)-> bool:
     if action == connectfour_tools.DROP:
-        _write_line(connection, 'DROP '+move)
+        move += 1
+        _write_line(connection, 'DROP '+str(move))
         return _expect_line(connection, 'OKAY')
     elif action == connectfour_tools.POP:
-        _write_line(connection, 'POP '+move)
+        _write_line(connection, 'POP '+str(move))
+        move += 1
         return _expect_line(connection, 'OKAY')
     
 
@@ -60,7 +62,7 @@ def classify_ai_move(connection: ConnectFourConnection)-> AI_Message:
     '''returns the action and the move of AI in named tupble form'''
     move_list = _read_line(connection).split(' ')
     _read_line(connection)
-    return AI_Message(action = move_list[0], move = int(move_list[1]))
+    return AI_Message(action = move_list[0], move = int(move_list[1])-1)
     
     
 ### These are Private function
@@ -81,6 +83,5 @@ def _write_line(connection: ConnectFourConnection, line: str) -> None:
     '''
     connection.socket_output.write(line + '\r\n')
     connection.socket_output.flush()
-    
     
      

@@ -21,10 +21,13 @@ def _main():
     game_state = connectfour_tools.init_the_game()
 
     while the_winner == connectfour.NONE:
+        
         _please_make_move(game_state, player_one, player_two)    
 
         try:
-            game_state = connectfour_tools.pop_or_drop(game_state, column_number)
+            action = connectfour_tools.ask_action()
+            move = connectfour_tools.ask_move()
+            game_state = connectfour_tools.pop_or_drop(game_state, action, move)
             connectfour_tools.display_board(game_state.board)
             the_winner = connectfour.winning_player(game_state)
         except ValueError:

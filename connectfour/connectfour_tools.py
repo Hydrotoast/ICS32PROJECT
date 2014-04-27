@@ -25,21 +25,13 @@ def display_board(board: [[str]])-> None:
         print('  '.join('.' if board[x][y] == ' ' else board[x][y] for x in range(connectfour.BOARD_COLUMNS)))
         
 
-def pop_or_drop(game_state: connectfour.ConnectFourGameState, column_number: int) -> connectfour.ConnectFourGameState:
+def pop_or_drop(game_state: connectfour.ConnectFourGameState, action :str, move: int) -> connectfour.ConnectFourGameState:
     '''give player an option whether to pop for drop a piece and execute the command'''
-    action = ask_action() 
     if action == POP:
-        move = int(ask_move(column_number))-1
-        print(move)
         new_game_state = connectfour.pop_piece(game_state, move)
         return new_game_state
-    elif action == DROP:
-        move = int(ask_move(column_number))-1
+    else:   
         new_game_state = connectfour.drop_piece(game_state, move)
-        return new_game_state
-    else:
-        print('This is invalid move. Please type pop for {}, drop for {}.'.format(POP,DROP))
-        new_game_state = pop_or_drop(game_state, column_number)
         return new_game_state
 
 def print_the_winning_player(the_winner: str, player_one: str, player_two: str) -> None:
@@ -48,15 +40,18 @@ def print_the_winning_player(the_winner: str, player_one: str, player_two: str) 
         print('{} player, you won!'.format(player_one))
     else:
         print('{} player, you won!'.format(player_two))
+        
 
 def ask_action()-> str:
     action = input('Do you want to pop or drop? Pop for {}, drop for {}.'.format(POP,DROP)).lower().strip()
+    if action != POP and action != DROP:
+        raise connectfour.InvalidConnectFourMoveError
     return action
     
 
-def ask_move(column_number: int) -> int:
+def ask_move() -> int:
     '''ask user for column that they want to drop or pop their piece if given situation True. If the situation is False, give an error message.'''
-    move = input('Please type in 1~{}'.format(column_number))
+    move = int(input('Please type in 1~{}'.format(connectfour.BOARD_COLUMNS)))-1
     return move
 
         

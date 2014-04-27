@@ -2,7 +2,7 @@ import socket
 import connectfour
 import connectfour_function
 import connectfour_I32CFSP_final
-
+import connectfour_tools
 
 def _conduct_connectfour_battle():
     _welcome_banner()
@@ -29,27 +29,30 @@ def _conduct_connectfour_battle():
             print('We could not request the game. sorry!')
             
         game_state = connectfour_tools.init_the_game()
-
+    
         while the_winner == connectfour.NONE:
             _make_move_please(game_state, user_player, ai_player, user_id)
             
             try:
-                action = ask_action()
-                move = int(ask_move)
-                if not connectfour_tools.drop_or_pop_request(action, move, connect_four_connection):
+                action = connectfour_tools.ask_action()
+                move = connectfour_tools.ask_move()
+                if not connectfour_I32CFSP_final.drop_or_pop_request(action, move, connect_four_connection):
                     raise connectfour.InvalidConnectFourMoveError
-                #update board before ai plays
-                ai_message = classify_ai_move(connect_four_connection)
-                #update board after ai makes move
-                    
+                game_state = connectfour_tools.pop_or_drop(game_state, action, move)
+                connectfour_tools.display_board(game_state.board)
+                the_winner = connectfour.winning_player(game_state)
                 
-                
+                _make_move_please(game_state, user_player, ai_player, user_id)
+                ai_message = connectfour_I32CFSP_final.classify_ai_move(connect_four_connection)
+                game_state = connectfour_tools.pop_or_drop(game_state, ai_message.action, ai_message.move)
+                connectfour_tools.display_board(game_state.board)
+                the_winner = connectfour.winning_player(game_state)
             except ValueError:
                 print('This is invalid move. Please type in 1~{}\n'.format(column_number))
             except connectfour.InvalidConnectFourMoveError:
                 print('This is invalid move. Please try again.\n')
                 
-            
+        _print_the_winning_player(the_winner, user_player, ai_player)
 
     except:
         print('Disconnected! Goodbye!')
@@ -65,7 +68,13 @@ def _make_move_please(game_state: connectfour.ConnectFourGameState, user_player:
         print('{}, this is your turn. Please make a move.\n'.format(user_id))
     else:
         print('This is AI turn\'s. Please wait for a bit.')
-        
+
+def _print_the_winning_player(the_winner: str, player_one: str, player_two: str) -> None:
+    '''print the winner of the game'''
+    if the_winner == player_one:
+        print('Congratulation, {}! You defeated the evil AI!!!'.format(user_id))
+    else:
+        print('Shame on you! AI defeated you. Practice more to defeat it next time.')
         
 
 if __name__ == '__main__':
