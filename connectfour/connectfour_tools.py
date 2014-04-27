@@ -56,7 +56,8 @@ def ask_action()-> str:
     
 
 def ask_move() -> int:
-    '''ask user for column that they want to drop or pop their piece if given situation True. If the situation is False, give an error message.'''
+    '''ask user for column that they want to drop or pop their piece.
+    convert the move into integer and returns the move'''
     move = int(input('Please type in 1~{}'.format(connectfour.BOARD_COLUMNS)))-1
     return move
 
