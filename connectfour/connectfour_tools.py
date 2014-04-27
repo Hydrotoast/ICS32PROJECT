@@ -7,12 +7,13 @@
 import collections
 import connectfour
 
+
 POP = 'p'
 DROP = 'd'
 
  
 def init_the_game()-> connectfour.ConnectFourGameState:
-    '''initialize and print the board'''
+    '''initialize the game and print the board'''
     display_board(connectfour.new_game_state().board)
     game_state = connectfour.new_game_state()
     return game_state
@@ -34,6 +35,7 @@ def pop_or_drop(game_state: connectfour.ConnectFourGameState, action :str, move:
         new_game_state = connectfour.drop_piece(game_state, move)
         return new_game_state
 
+
 def print_the_winning_player(the_winner: str, player_one: str, player_two: str) -> None:
     '''print the winner of the game'''
     if the_winner == player_one:
@@ -43,6 +45,10 @@ def print_the_winning_player(the_winner: str, player_one: str, player_two: str) 
         
 
 def ask_action()-> str:
+    '''
+    ask wether the user wants to pop or drop and set that as action.
+    if user neither pops or drops, raise an error.
+    '''
     action = input('Do you want to pop or drop? Pop for {}, drop for {}.'.format(POP,DROP)).lower().strip()
     if action != POP and action != DROP:
         raise connectfour.InvalidConnectFourMoveError

@@ -1,7 +1,7 @@
 ###connectfour_consol_final.py
 ##
 ##ICS 32 Spring 2014
-##Bohyun Brianna Kim
+##Bohyun Brianna Kim ID: 27523065, Albert Blatter ID: 76229838
 ##Project #2: Send Me On My Way
 
 

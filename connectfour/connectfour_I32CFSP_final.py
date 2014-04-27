@@ -14,9 +14,11 @@ ConnectFourConnection = collections.namedtuple('ConnectFourConnection', ['socket
 AI_Message = collections.namedtuple('AI_Message',['action','move'])
 ai_message = AI_Message(action = '', move = '')
 
+
 def connect(host: str, port: int) -> ConnectFourConnection:
     '''
-    Connects to the connectfour server so that the user can play game. Raises error if the connection was not successful.
+    Connects to the connectfour server so that the user can play game.
+    Raises error if the connection was not successful.
     '''
 
     connect_socket = socket.socket()
@@ -33,7 +35,8 @@ def connect(host: str, port: int) -> ConnectFourConnection:
 
 def login(connection: ConnectFourConnection, username: str) -> bool:
     '''
-    Logs a user into ConnectFour service. return true if the connection was successful and false otherwise.
+    Logs a user into ConnectFour service.
+    return true if the connection was successful and false otherwise.
     '''
     _write_line(connection, 'I32CFSP_HELLO '+ username)
     return _expect_line(connection, 'WELCOME '+ username)
@@ -41,13 +44,18 @@ def login(connection: ConnectFourConnection, username: str) -> bool:
 
 def declare_match(connection: ConnectFourConnection) -> bool:
     '''
-    After logging in let user to declare battle with AI. If attempt fails, returns False.
+    After logging in let user to declare battle with AI.
+    If attempt fails, returns False.
     '''
     _write_line(connection, 'AI_GAME')
     return _expect_line(connection, 'READY')
 
 
 def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnection)-> bool:
+    '''
+    make a request to server what action and move player makes.
+    If the move is valid, return true. otherwise, return false
+    '''
     if action == connectfour_tools.DROP:
         move += 1
         _write_line(connection, 'DROP '+str(move))
