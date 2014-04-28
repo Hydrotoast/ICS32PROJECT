@@ -60,7 +60,7 @@ def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnectio
         _write_line(connection, 'DROP '+str(move))
         x = read_line(connection)
         print(x)
-        if x[0] == 'W' or 'O':
+        if x[0] == 'W' or x[0] == 'O':
             return True
         else:
             y = read_line(connection)
@@ -70,11 +70,12 @@ def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnectio
         _write_line(connection, 'POP '+str(move))
         x = read_line(connection)
         print(x)
-        if x[0] == 'W' or 'O':
+        if x[0] == 'W' or x[0] == 'O':
             return True
         else:
             y = read_line(connection)
             print(y)
+    return False
 
 def classify_ai_move(connection: ConnectFourConnection)-> AI_Message:
     '''returns the action and the move of AI in named tupble form'''
