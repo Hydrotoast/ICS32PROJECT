@@ -58,22 +58,27 @@ def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnectio
     if action == connectfour_tools.DROP:
         move += 1
         _write_line(connection, 'DROP '+str(move))
-        return _expect_line(connection, 'OKAY')
+        x = read_line(connection)
+        if x[0] == 'W' or 'O':
+            return True
+        
     elif action == connectfour_tools.POP:
         move += 1
         _write_line(connection, 'POP '+str(move))
-        return _expect_line(connection, 'OKAY')
+        x = read_line(connection)
+        if x[0] == 'W' or 'O':
+            return True
     
 
 def classify_ai_move(connection: ConnectFourConnection)-> AI_Message:
     '''returns the action and the move of AI in named tupble form'''
-    move_list = _read_line(connection).split(' ')
-    _read_line(connection)
-    return AI_Message(action = move_list[0], move = int(move_list[1])-1)
+    move_list = read_line(connection).split(' ')
+    x = read_line(connection)
+    return AI_Message(action = move_list[0].lower(), move = int(move_list[1])-1)
     
     
 ### These are Private function
-def _read_line(connection: ConnectFourConnection) -> str:
+def read_line(connection: ConnectFourConnection) -> str:
     ''' reads a line of the text sent from the server'''
     return connection.socket_input.readline()[:-1]
 
@@ -81,7 +86,7 @@ def _read_line(connection: ConnectFourConnection) -> str:
 def _expect_line(connection: ConnectFourConnection, line_to_expect: str) -> bool:
     '''
     Reads a line of text sent from the server, expecting it to contain a particular text.'''
-    return _read_line(connection) == line_to_expect
+    return read_line(connection) == line_to_expect
 
 
 def _write_line(connection: ConnectFourConnection, line: str) -> None:

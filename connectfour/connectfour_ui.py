@@ -13,7 +13,7 @@ import connectfour_tools
 
 
 def _conduct_connectfour_battle():
-    ''' conduct the battle with AI'''
+    '''conduct the battle with AI'''
     _welcome_banner()
     
     user_host = input('Please specify your IP address or a host.').strip()
@@ -29,14 +29,8 @@ def _conduct_connectfour_battle():
     try:
         if connectfour_I32CFSP_final.login(connect_four_connection, user_id):
             print('Welcome, {}!'.format(user_id))
-        else:
-            print('Login Failed.')
-        #consdering to erase the "else" what do you think?
         if connectfour_I32CFSP_final.declare_match(connect_four_connection):
-            print('Initializing the game.')
-        else:
-            print('Battle request Failed.')
-        #consdering to erase the "else" what do you think?    
+            print('Initializing the game.')  
         game_state = connectfour_tools.init_the_game()
 
         while the_winner == connectfour.NONE:
@@ -45,13 +39,12 @@ def _conduct_connectfour_battle():
             try:
                 action = connectfour_tools.ask_action()
                 move = connectfour_tools.ask_move()
-                if not connectfour_I32CFSP_final.drop_or_pop_request(action, move, connect_four_connection):
+                if connectfour_I32CFSP_final.drop_or_pop_request(action, move, connect_four_connection) == False:
                     raise connectfour.InvalidConnectFourMoveError()
                 game_state = connectfour_tools.pop_or_drop(game_state, action, move)
                 connectfour_tools.display_board(game_state.board)
                 the_winner = connectfour.winning_player(game_state)
 
-                # break if the user player wins on his/her move
                 if the_winner != connectfour.NONE:
                     break
                 
@@ -60,13 +53,14 @@ def _conduct_connectfour_battle():
                 game_state = connectfour_tools.pop_or_drop(game_state, ai_message.action, ai_message.move)
                 connectfour_tools.display_board(game_state.board)
                 the_winner = connectfour.winning_player(game_state)
-                
+
             except ValueError:
                 print('This is invalid move. Please type in 1~{}\n'.format(column_number))
 
             except connectfour.InvalidConnectFourMoveError:
                 print('This is invalid move. Please try again.\n')
-
+                y = connectfour_I32CFSP_final.read_line(connect_four_connection)
+                    
         _print_the_winning_player(the_winner, user_player, ai_player, user_id)
 
     except:
