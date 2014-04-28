@@ -12,7 +12,6 @@ import connectfour_tools
 
 ConnectFourConnection = collections.namedtuple('ConnectFourConnection', ['socket','socket_input','socket_output'])
 AI_Message = collections.namedtuple('AI_Message',['action','move'])
-ai_message = AI_Message(action = '', move = '')
 
 
 def connect(host: str, port: int) -> ConnectFourConnection:
@@ -91,5 +90,3 @@ def _write_line(connection: ConnectFourConnection, line: str) -> None:
     '''
     connection.socket_output.write(line + '\r\n')
     connection.socket_output.flush()
-    
-     

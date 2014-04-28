@@ -23,7 +23,6 @@ def _conduct_connectfour_battle():
     user_player = connectfour.RED
     ai_player = connectfour.YELLOW
     column_number = connectfour.BOARD_COLUMNS
-    row_number = connectfour.BOARD_ROWS
 
     connect_four_connection = connectfour_I32CFSP_final.connect(user_host, user_port)    
 
@@ -40,7 +39,6 @@ def _conduct_connectfour_battle():
         #consdering to erase the "else" what do you think?    
         game_state = connectfour_tools.init_the_game()
 
-    
         while the_winner == connectfour.NONE:
             _make_move_please(game_state, user_player, ai_player, user_id)
             
@@ -48,10 +46,14 @@ def _conduct_connectfour_battle():
                 action = connectfour_tools.ask_action()
                 move = connectfour_tools.ask_move()
                 if not connectfour_I32CFSP_final.drop_or_pop_request(action, move, connect_four_connection):
-                    raise connectfour.InvalidConnectFourMoveError
+                    raise connectfour.InvalidConnectFourMoveError()
                 game_state = connectfour_tools.pop_or_drop(game_state, action, move)
                 connectfour_tools.display_board(game_state.board)
                 the_winner = connectfour.winning_player(game_state)
+
+                # break if the user player wins on his/her move
+                if the_winner != connectfour.NONE:
+                    break
                 
                 _make_move_please(game_state, user_player, ai_player, user_id)
                 ai_message = connectfour_I32CFSP_final.classify_ai_move(connect_four_connection)
@@ -65,8 +67,7 @@ def _conduct_connectfour_battle():
             except connectfour.InvalidConnectFourMoveError:
                 print('This is invalid move. Please try again.\n')
 
-                
-        _print_the_winning_player(the_winner, user_player, ai_player)
+        _print_the_winning_player(the_winner, user_player, ai_player, user_id)
 
     except:
         print('Disconnected! Goodbye!')
@@ -88,7 +89,7 @@ def _make_move_please(game_state: connectfour.ConnectFourGameState, user_player:
         print('This is AI turn\'s. Please wait for a bit.')
 
 
-def _print_the_winning_player(the_winner: str, player_one: str, player_two: str) -> None:
+def _print_the_winning_player(the_winner: str, player_one: str, player_two: str, user_id: str) -> None:
     '''print the winner of the game'''
     if the_winner == player_one:
         print('Congratulation, {}! You defeated the evil AI!!!'.format(user_id))
