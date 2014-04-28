@@ -16,9 +16,9 @@ def _conduct_connectfour_battle():
     '''conduct the battle with AI'''
     _welcome_banner()
     
-    user_host = input('Please specify your IP address or a host.').strip()
-    user_port = int(input('Please enter the port.'))
-    user_id = input('Please enter your User ID.').strip()
+    user_host = 'woodhouse.ics.uci.edu'#input('Please specify your IP address or a host.').strip()
+    user_port = 4444#int(input('Please enter the port.'))
+    user_id = 'Burbri'#input('Please enter your User ID.').strip()
     the_winner = connectfour.NONE
     user_player = connectfour.RED
     ai_player = connectfour.YELLOW
@@ -59,7 +59,6 @@ def _conduct_connectfour_battle():
 
             except connectfour.InvalidConnectFourMoveError:
                 print('This is invalid move. Please try again.\n')
-                y = connectfour_I32CFSP_final.read_line(connect_four_connection)
                     
         _print_the_winning_player(the_winner, user_player, ai_player, user_id)
 

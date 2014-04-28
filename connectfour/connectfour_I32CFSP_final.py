@@ -59,21 +59,28 @@ def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnectio
         move += 1
         _write_line(connection, 'DROP '+str(move))
         x = read_line(connection)
+        print(x)
         if x[0] == 'W' or 'O':
             return True
-        
+        else:
+            y = read_line(connection)
+            print(y)
     elif action == connectfour_tools.POP:
         move += 1
         _write_line(connection, 'POP '+str(move))
         x = read_line(connection)
+        print(x)
         if x[0] == 'W' or 'O':
             return True
-    
+        else:
+            y = read_line(connection)
+            print(y)
 
 def classify_ai_move(connection: ConnectFourConnection)-> AI_Message:
     '''returns the action and the move of AI in named tupble form'''
     move_list = read_line(connection).split(' ')
     x = read_line(connection)
+    print(x)
     return AI_Message(action = move_list[0].lower(), move = int(move_list[1])-1)
     
     
