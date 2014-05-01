@@ -24,9 +24,8 @@ def _conduct_connectfour_battle():
     ai_player = connectfour.YELLOW
     column_number = connectfour.BOARD_COLUMNS
 
-    connect_four_connection = connectfour_I32CFSP_final.connect(user_host, user_port)    
-
     try:
+        connect_four_connection = connectfour_I32CFSP_final.connect(user_host, user_port)  
         if connectfour_I32CFSP_final.login(connect_four_connection, user_id):
             print('Welcome, {}!'.format(user_id))
         if connectfour_I32CFSP_final.declare_match(connect_four_connection):

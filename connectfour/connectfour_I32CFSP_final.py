@@ -59,8 +59,8 @@ def drop_or_pop_request(action: str, move: int, connection: ConnectFourConnectio
         move += 1
         _write_line(connection, 'DROP '+str(move))
         x = read_line(connection)
-        print(x)
         if x[0] == 'W' or x[0] == 'O':
+            print(x)
             return True
         else:
             y = read_line(connection)
