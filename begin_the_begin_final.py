@@ -8,8 +8,7 @@ def run_program()-> None:
     '''opens the program and asks user for directory input'''
     print('Welcome to File Directory. \n')
     while True:
-        search_path = input('Please specify the path to the directory you want to search for: \n')
-        search_path = search_path.strip()
+        search_path = input('Please specify the path to the directory you want to search for: \n').strip()
         if not os.path.isdir(search_path):
             print('Invalid directory input. Please try again.')
         else:
@@ -121,6 +120,7 @@ def print_first_text_line(interested_path_list: list) -> str:
         with open(element, 'r') as the_file:
             first_line = the_file.readline()
             print(first_line)
+            #must make a try and except what if we delete file after get the file path?
 
         
 def copy_file(interested_path_list: list)-> None:
@@ -128,6 +128,7 @@ def copy_file(interested_path_list: list)-> None:
     for element in interested_path_list:
         print(element)
         shutil.copy(element, element + '.dup')
+        #must make a try and except what if we delete file after get the file path?
 
 
 def touch_file(interested_path_list: list):
@@ -135,6 +136,7 @@ def touch_file(interested_path_list: list):
     for element in interested_path_list:
         print(element)
         os.utime(element, None)
+        #must make a try and except what if we delete file after get the file path?
 
 
 if __name__ == '__main__':
