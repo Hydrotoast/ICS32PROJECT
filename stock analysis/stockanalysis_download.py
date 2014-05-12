@@ -14,8 +14,8 @@ def download_stock_data()-> [[str]]:
     if len(url) == 0:
         return
     else:
-        downloaded_data = _download_url_to_python(url)
-        return _split_line_to_list(downloaded_data)
+        downloaded_data = _split_line_to_list(_download_url_to_python(url))
+        return downloaded_data[1:len(downloaded_data)]
     
 
 def _pick_url() -> str:
